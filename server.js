@@ -11,15 +11,15 @@ const app = express()
 const {coinFlip, coinFlips, countFlips, flipACoin} = require("./modules/coin.js");
 
 
-args['port']
+args["port"]
 
 const port = args.port || 5000
 
-
+/*
 if (args.port != null) {
     port = args.port;
 }
-
+*/
 
 // Start an app server
 const server = app.listen(port, () => {
@@ -30,6 +30,10 @@ const server = app.listen(port, () => {
 app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
 });
+
+app.get('/', (req,res) => {
+    res.send('working test')
+})
 
 
 app.get('/app/', (req, res) => {
@@ -47,12 +51,17 @@ app.get('/app/flip', (req, res) => {
     res.statusCode = 200;
     res.statusMessage = 'OK';
     res.json({flip: aFlip})
-    res.json({flip:coinflip()})
+    res.json({flip:coinFlip()})
 })
 
 // Endpoint returning JSON of flip array & summary
 app.get('/app/flips/:number', (req, res) => {
+    //res.statusCode = 200;
+    res.statusMessage = 'OK';
+
     var flips = coinFlips(req.params.number)
+    var summary = countFlips(flips)
+
     res.status(200).json({"raw" : flips, "summary" : countFlips(flips)})
 });
 
