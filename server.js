@@ -1,4 +1,4 @@
-import { coinFlips, countFlips, coinFlip, flipACoin } from "./modules/coin.mjs";
+//import { coinFlips, countFlips, coinFlip, flipACoin } from "./modules/coin.mjs";
 
 
 const http = require('http')
@@ -9,6 +9,8 @@ const args = require('minimist')(process.argv.slice(2));
 const app = express()
 
 args['port']
+
+const HTTP_PORT = args.port || 5000
 
 
 var port = 5000
@@ -38,7 +40,7 @@ app.get('/app/', (req, res) => {
 
 
 // Endpoint returning JSON of flip function result
-app.get('/app/flip/', (req, res) => {
+app.get('/app/flip', (req, res) => {
     res.statusCode = 200;
     let aFlip = coinFlip()
     res.json({flip: aFlip})
