@@ -8,12 +8,14 @@ const args = require('minimist')(process.argv.slice(2));
 
 const app = express()
 
+const {coinFlip, coinFlips, countFlips, flipACoin} = require("./modules/coin.js");
+
+
 args['port']
 
-const HTTP_PORT = args.port || 5000
+const port = args.port || 5000
 
 
-var port = 5000
 if (args.port != null) {
     port = args.port;
 }
@@ -21,13 +23,14 @@ if (args.port != null) {
 
 // Start an app server
 const server = app.listen(port, () => {
-    console.log('App listening on port %PORT%'.replace('%PORT%',HTTP_PORT))
+    console.log('App listening on port %PORT%'.replace('%PORT%',port))
 });
 
 // Default response for any other request
 app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
 });
+
 
 app.get('/app/', (req, res) => {
     // Respond with status 200
@@ -42,9 +45,9 @@ app.get('/app/', (req, res) => {
 // Endpoint returning JSON of flip function result
 app.get('/app/flip', (req, res) => {
     res.statusCode = 200;
-    let aFlip = coinFlip()
+    res.statusMessage = 'OK';
     res.json({flip: aFlip})
-    res.writeHead(res.statusCode, {'Content-Type' : 'application/json'});
+    res.json({flip:coinflip()})
 })
 
 // Endpoint returning JSON of flip array & summary
