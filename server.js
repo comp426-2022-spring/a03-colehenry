@@ -60,13 +60,12 @@ app.get('/app/', (req, res) => {
 app.get('/app/flip', (req, res) => {
     res.statusCode = 200;
     res.statusMessage = 'OK';
-    res.json({flip: aFlip})
     res.json({flip:coinFlip()})
 });
 
 // Endpoint returning JSON of flip array & summary
 app.get('/app/flips/:number', (req, res) => {
-    //res.statusCode = 200;
+    res.statusCode = 200;
     res.statusMessage = 'OK';
 
     var flips = coinFlips(req.params.number)
