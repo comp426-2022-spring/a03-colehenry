@@ -1,30 +1,40 @@
 //import { coinFlips, countFlips, coinFlip, flipACoin } from "./modules/coin.mjs";
 
-
 const http = require('http')
 const express = require('express')
-const fs = require('fs')
-const args = require('minimist')(process.argv.slice(2));
-
 const app = express()
+
+const args = require('minimist')(process.argv.slice(2))
+
+args['port']
+const port = args.port || process.env.PORT || 5000 
 
 const {coinFlip, coinFlips, countFlips, flipACoin} = require("./modules/coin.js");
 
-
-args["port"]
-
-const port = args.port || 5000
-
-/*
-if (args.port != null) {
-    port = args.port;
-}
-*/
 
 // Start an app server
 const server = app.listen(port, () => {
     console.log('App listening on port %PORT%'.replace('%PORT%',port))
 });
+
+
+
+//args["port"]
+
+//const port = args.port || 5000
+
+/*
+if (args.port != null) {
+    port = args.port;
+}
+
+
+// Start an app server
+const server = app.listen(port, () => {
+    console.log('App listening on port %PORT%'.replace('%PORT%',port))
+});
+*/
+
 
 // Default response for any other request
 app.use(function(req, res){
@@ -38,11 +48,8 @@ app.get('/', (req,res) => {
 
 app.get('/app/', (req, res) => {
     // Respond with status 200
-        res.statusCode = 200;
-    // Respond with status message "OK"
-        res.statusMessage = 'OK';
-        res.writeHead( res.statusCode, { 'Content-Type' : 'text/plain' });
-        res.end(res.statusCode+ ' ' +res.statusMessage)
+        res.status(200).end("OK");
+        res.type("text/plain");
     });
 
 
